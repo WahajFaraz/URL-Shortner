@@ -172,8 +172,9 @@ app.get(['/favicon.ico', '/favicon.png'], (req, res) => {
   res.status(200).send(faviconSvg);
 });
 
-// Handle short URL redirects directly (only for 6-char short codes)
-app.get('/:shortCode([0-9A-Za-z]{6})', asyncHandler(urlController.getShortUrl));
+// Handle short URL redirects directly (supports generated codes + custom aliases)
+// Allowed chars align with the ShortUrl model: /^[a-zA-Z0-9-_]{1,30}$/
+app.get('/:shortCode([a-zA-Z0-9-_]{1,30})', asyncHandler(urlController.getShortUrl));
 
 app.use((req, res) => {
   res.status(404).json({

@@ -7,6 +7,12 @@ import toast from 'react-hot-toast';
 import { slideUp, containerVariants, itemVariants } from '../../utils/animations.js';
 
 export const UrlShortenerForm = ({ onUrlCreated, editData }) => {
+  const BACKEND_BASE_URL =
+    import.meta.env.VITE_BACKEND_BASE_URL ||
+    (import.meta.env.MODE === 'production'
+      ? 'https://url-shortner-back.vercel.app'
+      : 'http://localhost:5000');
+
   const [formData, setFormData] = useState({
     originalUrl: '',
     customAlias: '',
@@ -64,6 +70,8 @@ export const UrlShortenerForm = ({ onUrlCreated, editData }) => {
       const tags = formData.tags ? formData.tags.split(',').map(t => t.trim()) : [];
       const payload = {
         ...formData,
+        // Treat empty/whitespace alias as not provided
+        customAlias: formData.customAlias?.trim() ? formData.customAlias.trim() : null,
         tags,
         expirationClicks: formData.expirationClicks ? parseInt(formData.expirationClicks) : null,
       };
@@ -78,7 +86,7 @@ export const UrlShortenerForm = ({ onUrlCreated, editData }) => {
         // Create new URL
         const { data: createResponse } = await urlService.createUrl(payload);
         data = createResponse;
-        const fullUrl = `${window.location.origin}/${data.shortUrl.shortCode}`;
+        const fullUrl = `${BACKEND_BASE_URL}/${data.shortUrl.shortCode}`;
         await copyToClipboard(fullUrl);
         toast.success('Short URL created and copied to clipboard!');
       }

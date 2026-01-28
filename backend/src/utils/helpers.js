@@ -6,7 +6,9 @@ export const generateShortCode = (length = SHORT_CODE_LENGTH) => {
   for (let i = 0; i < length; i++) {
     result += BASE62_CHARS.charAt(Math.floor(Math.random() * BASE62_CHARS.length));
   }
-  return result;
+  // Stored short codes are lowercased by the mongoose schema, so generate lowercase
+  // to avoid case-collision issues when checking uniqueness.
+  return result.toLowerCase();
 };
 
 export const generateHash = (str) => {

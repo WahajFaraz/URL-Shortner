@@ -12,10 +12,19 @@ export const createShortUrl = async (userId, originalUrl, customAlias = null, op
     throw new ValidationError('Invalid URL format');
   }
 
-  let shortCode = customAlias || generateShortCode();
+  // Normalize alias: trim + lowercase; treat empty/whitespace as null
+  const normalizedAlias =
+    typeof customAlias === 'string' ? customAlias.trim().toLowerCase() : customAlias;
 
-  if (customAlias) {
-    const existing = await ShortUrl.findOne({ customAlias });
+  const alias = normalizedAlias ? normalizedAlias : null;
+
+  let shortCode = alias || generateShortCode();
+
+  if (alias) {
+    // Ensure alias doesn't collide with either an existing alias OR an existing shortCode
+    const existing = await ShortUrl.findOne({
+      $or: [{ customAlias: alias }, { shortCode: alias }],
+    });
     if (existing) {
       throw new ConflictError('Custom alias already taken');
     }
@@ -47,7 +56,7 @@ export const createShortUrl = async (userId, originalUrl, customAlias = null, op
     userId,
     originalUrl,
     shortCode,
-    customAlias: customAlias || null,
+    customAlias: alias,
     title: title || null,
     description: description || null,
     tags: tags || [],

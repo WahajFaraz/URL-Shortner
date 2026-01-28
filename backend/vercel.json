@@ -5,6 +5,10 @@
       "destination": "/api"
     },
     {
+      "source": "/favicon.svg",
+      "destination": "/favicon.svg"
+    },
+    {
       "source": "/",
       "destination": "/api/status"
     },
@@ -15,6 +19,10 @@
     {
       "source": "/favicon.png",
       "destination": "/favicon.svg"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api"
     }
   ]
 }
