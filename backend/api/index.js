@@ -1,6 +1,6 @@
 import app from '../src/app.js';
 
-// Catch-all API route so /api/* is handled by the Express app
+// Single entrypoint for all /api/* routes on Vercel
 export default function handler(req, res) {
   return app(req, res);
 }
