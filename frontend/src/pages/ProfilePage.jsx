@@ -253,16 +253,6 @@ const ProfilePage = () => {
                   <p className="text-xl font-semibold text-white">{user?.email}</p>
                 </div>
                 <div className="p-6 bg-gradient-to-r from-slate-700/30 to-slate-800/30 rounded-xl border border-white/10">
-                  <p className="text-sm text-gray-400 mb-2 font-medium">Member Since</p>
-                  <p className="text-xl font-semibold text-white">
-                    {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    }) : 'Loading...'}
-                  </p>
-                </div>
-                <div className="p-6 bg-gradient-to-r from-slate-700/30 to-slate-800/30 rounded-xl border border-white/10">
                   <p className="text-sm text-gray-400 mb-2 font-medium">Account Status</p>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />

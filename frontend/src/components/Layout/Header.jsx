@@ -99,7 +99,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
     ? [
         { name: 'Dashboard', href: '/dashboard', icon: '📊' },
         { name: 'Create Link', href: '/create', icon: '🔗' },
-        { name: 'Analytics', href: '/analytics', icon: '📈' },
+        // Hide Analytics in the mobile sidebar (requested)
+        { name: 'Analytics', href: '/analytics', icon: '📈', mobileHidden: true },
         { name: 'Profile', href: '/profile', icon: '👤' },
       ]
     : [
@@ -135,7 +136,9 @@ export const Sidebar = ({ isOpen, onClose }) => {
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors group"
+              className={`items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors group ${
+                item.mobileHidden ? 'hidden md:flex' : 'flex'
+              }`}
             >
               <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
               <span className="font-medium group-hover:text-indigo-400">{item.name}</span>

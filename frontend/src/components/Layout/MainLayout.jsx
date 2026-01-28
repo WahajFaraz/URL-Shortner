@@ -10,7 +10,8 @@ export const MainLayout = ({ children }) => {
       <div className="flex">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="flex-1 overflow-auto">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+          {/* Use full width on desktop (sidebar already consumes space) */}
+          <div className="w-full px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
             {children}
           </div>
           <Footer />
