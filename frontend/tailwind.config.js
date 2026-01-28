@@ -6,6 +6,9 @@ module.exports = {
   darkMode: 'selector',
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+      },
       colors: {
         primary: '#6366f1',
         secondary: '#8b5cf6',

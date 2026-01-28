@@ -108,7 +108,7 @@ export const UrlShortenerForm = ({ onUrlCreated, editData }) => {
 
   return (
     <motion.form onSubmit={handleSubmit} className="space-y-6" {...slideUp}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
         <Input
           name="originalUrl"
           type="url"
@@ -129,7 +129,7 @@ export const UrlShortenerForm = ({ onUrlCreated, editData }) => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
         <Input
           name="title"
           type="text"
@@ -158,7 +158,7 @@ export const UrlShortenerForm = ({ onUrlCreated, editData }) => {
         className="resize-none"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
         <Select
           name="expirationType"
           label="Expiration Type"

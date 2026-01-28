@@ -27,32 +27,32 @@ export const Navbar = ({ onMenuToggle }) => {
       initial="initial"
       animate="animate"
     >
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-4">
           <button
             onClick={onMenuToggle}
-            className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
+            className="md:hidden p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
             URLShort
           </h1>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {isAuthenticated ? (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <motion.div 
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full border border-indigo-400/30"
+                className="hidden xs:flex items-center gap-2 px-2 sm:px-3 py-1.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full border border-indigo-400/30"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
                 <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-pulse" />
                 <motion.span 
-                  className="text-sm font-medium text-white"
+                  className="text-xs sm:text-sm font-medium text-white"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
@@ -68,22 +68,22 @@ export const Navbar = ({ onMenuToggle }) => {
                   size="sm" 
                   variant="secondary" 
                   onClick={() => navigate('/profile')}
-                  className="bg-gradient-to-r from-purple-500/30 to-pink-500/30 hover:from-purple-500/40 hover:to-pink-500/40 border-purple-400/40"
+                  className="bg-gradient-to-r from-purple-500/30 to-pink-500/30 hover:from-purple-500/40 hover:to-pink-500/40 border-purple-400/40 text-xs sm:text-sm px-2 sm:px-3"
                 >
-                  👤 Profile
+                  👤 <span className="hidden xs:inline">Profile</span>
                 </Button>
               </motion.div>
-              <Button size="sm" variant="danger" onClick={logoutUser}>
-                Logout
+              <Button size="sm" variant="danger" onClick={logoutUser} className="text-xs sm:text-sm px-2 sm:px-3">
+                <span className="hidden sm:inline">Logout</span><span className="sm:hidden">🚪</span>
               </Button>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Button size="sm" variant="secondary" onClick={() => navigate('/register')}>
-                Sign Up
+              <Button size="sm" variant="secondary" onClick={() => navigate('/register')} className="text-xs sm:text-sm px-2 sm:px-3">
+                <span className="hidden xs:inline">Sign Up</span><span className="xs:hidden">📝</span>
               </Button>
-              <Button size="sm" variant="primary" onClick={() => navigate('/login')}>
-                Login
+              <Button size="sm" variant="primary" onClick={() => navigate('/login')} className="text-xs sm:text-sm px-2 sm:px-3">
+                <span className="hidden xs:inline">Login</span><span className="xs:hidden">🔓</span>
               </Button>
             </div>
           )}

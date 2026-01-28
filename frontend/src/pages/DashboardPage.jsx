@@ -80,7 +80,7 @@ const DashboardPage = () => {
             </div>
           ) : (
             <>
-              <h1 className="text-3xl font-bold mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">
                 Welcome back,{' '}
                 <motion.button
                   onClick={() => navigate('/profile')}
@@ -92,7 +92,7 @@ const DashboardPage = () => {
                 </motion.button>
                 ! 👋
               </h1>
-              <p className="text-gray-300">
+              <p className="text-sm sm:text-base text-gray-300">
                 You have created <span className="font-semibold text-indigo-400">{total || 0}</span> links with{' '}
                 <span className="font-semibold text-indigo-400">{totalClicks}</span> total clicks
               </p>
@@ -103,7 +103,7 @@ const DashboardPage = () => {
 
       <motion.div variants={itemVariants}>
         <GlassCard>
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6">
             <Input
               placeholder="Search your links..."
               value={searchQuery}
@@ -113,7 +113,7 @@ const DashboardPage = () => {
               }}
               className="flex-1"
             />
-            <Button variant="primary" onClick={() => navigate('/create')}>
+            <Button variant="primary" onClick={() => navigate('/create')} className="w-full sm:w-auto">
               + Create New
             </Button>
           </div>
@@ -124,8 +124,8 @@ const DashboardPage = () => {
             </div>
           ) : urls.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-300 mb-4">No short URLs yet. Create one to get started!</p>
-              <Button variant="primary" onClick={() => navigate('/create')}>
+              <p className="text-sm sm:text-base text-gray-300 mb-4">No short URLs yet. Create one to get started!</p>
+              <Button variant="primary" onClick={() => navigate('/create')} className="w-full sm:w-auto">
                 Create Your First Link
               </Button>
             </div>
@@ -144,11 +144,12 @@ const DashboardPage = () => {
               </div>
 
               {total > 10 && (
-                <div className="flex justify-between items-center mt-8 pt-8 border-t border-white/10">
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-8 border-t border-white/10">
                   <Button
                     variant="secondary"
                     onClick={() => setPage(Math.max(1, page - 1))}
                     disabled={page === 1}
+                    className="w-full sm:w-auto"
                   >
                     Previous
                   </Button>
@@ -159,6 +160,7 @@ const DashboardPage = () => {
                     variant="secondary"
                     onClick={() => setPage(page + 1)}
                     disabled={page >= Math.ceil(total / 10)}
+                    className="w-full sm:w-auto"
                   >
                     Next
                   </Button>

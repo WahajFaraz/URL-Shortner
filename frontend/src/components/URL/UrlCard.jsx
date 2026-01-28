@@ -59,24 +59,24 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
         <div className="relative p-6 space-y-4">
           
           {/* Header Section with enhanced styling */}
-          <div className="flex items-start justify-between gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-6">
             <div className="flex-1 min-w-0">
               {url.title && (
-                <h3 className="text-xl font-bold text-white mb-3 transition-colors duration-200">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 transition-colors duration-200">
                   {url.title}
                 </h3>
               )}
               
               {/* URL Display */}
               <div className="space-y-3">
-                <div className="bg-gradient-to-r from-black/40 to-black/20 rounded-xl p-3 border border-white/10 transition-colors duration-200">
-                  <div className="flex items-center justify-between gap-3">
+                <div className="bg-gradient-to-r from-black/40 to-black/20 rounded-xl p-2 sm:p-3 border border-white/10 transition-colors duration-200">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-gray-400 uppercase tracking-wider mb-1 font-semibold">Original URL</p>
                       <a 
                         href={url.originalUrl}
                         onClick={handleOriginalUrlClick}
-                        className="text-sm text-gray-300 font-mono hover:text-white transition-colors duration-200 cursor-pointer truncate block"
+                        className="text-xs sm:text-sm text-gray-300 font-mono hover:text-white transition-colors duration-200 cursor-pointer truncate block"
                         title={url.originalUrl}
                       >
                         {url.originalUrl}
@@ -84,21 +84,21 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
                     </div>
                     <button
                       onClick={handleOriginalUrlClick}
-                      className="px-3 py-2 bg-gradient-to-r from-green-500/30 to-emerald-500/30 text-green-300 rounded-lg text-sm font-medium transition-colors duration-200 hover:from-green-500/40 hover:to-emerald-500/40 hover:text-green-200 flex-shrink-0"
+                      className="px-2 sm:px-3 py-1.5 sm:py-2 bg-gradient-to-r from-green-500/30 to-emerald-500/30 text-green-300 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 hover:from-green-500/40 hover:to-emerald-500/40 hover:text-green-200 flex-shrink-0"
                     >
-                      🔗 Open
+                      🔗 <span className="hidden sm:inline">Open</span>
                     </button>
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 rounded-xl p-3 border border-indigo-400/30 transition-colors duration-200">
-                  <div className="flex items-center gap-3">
+                <div className="bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 rounded-xl p-2 sm:p-3 border border-indigo-400/30 transition-colors duration-200">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-indigo-300 uppercase tracking-wider mb-1 font-semibold">Short URL</p>
                       <a 
                         href={shortUrl} 
                         onClick={handleShortUrlClick}
-                        className="text-sm font-mono text-white hover:text-indigo-200 transition-colors duration-200 cursor-pointer truncate block"
+                        className="text-xs sm:text-sm font-mono text-white hover:text-indigo-200 transition-colors duration-200 cursor-pointer truncate block"
                         title={shortUrl}
                       >
                         {cleanShortUrl}
@@ -106,13 +106,13 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
                     </div>
                     <button
                       onClick={handleCopy}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex-shrink-0 ${
+                      className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 flex-shrink-0 ${
                         copied 
                           ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
                           : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
                       }`}
                     >
-                      {copied ? '✓ Copied!' : '📋 Copy'}
+                      {copied ? '✓' : '📋'} <span className="hidden sm:inline">{copied ? 'Copied!' : 'Copy'}</span>
                     </button>
                   </div>
                 </div>
@@ -120,14 +120,14 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
             </div>
             
             {/* Enhanced Status Badges */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-row lg:flex-col gap-2 lg:gap-3 lg:mt-0">
               {!url.isActive && (
-                <Badge variant="danger" className="animate-pulse shadow-lg shadow-red-500/30">
+                <Badge variant="danger" className="animate-pulse shadow-lg shadow-red-500/30 text-xs sm:text-sm">
                   ⚠️ Inactive
                 </Badge>
               )}
               {url.customAlias && (
-                <Badge variant="default" className="shadow-lg shadow-indigo-500/30">
+                <Badge variant="default" className="shadow-lg shadow-indigo-500/30 text-xs sm:text-sm">
                   ⭐ Custom
                 </Badge>
               )}
@@ -158,27 +158,27 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
           )}
 
           {/* Stats Bar */}
-          <div className="bg-gradient-to-r from-slate-700/30 to-slate-800/30 rounded-xl p-3 border border-white/10 transition-colors duration-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-indigo-500/30 to-purple-500/30 rounded-lg flex items-center justify-center">
-                    <span className="text-indigo-300">📊</span>
+          <div className="bg-gradient-to-r from-slate-700/30 to-slate-800/30 rounded-xl p-2 sm:p-3 border border-white/10 transition-colors duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-indigo-500/30 to-purple-500/30 rounded-lg flex items-center justify-center">
+                    <span className="text-xs sm:text-sm text-indigo-300">📊</span>
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 uppercase tracking-wider">Clicks</p>
-                    <p className="text-lg font-bold text-indigo-400">{url.totalClicks || 0}</p>
+                    <p className="text-base sm:text-lg font-bold text-indigo-400">{url.totalClicks || 0}</p>
                   </div>
                 </div>
                 
                 {url.expirationDate && (
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-yellow-500/30 to-orange-500/30 rounded-lg flex items-center justify-center">
-                      <span className="text-yellow-400">⏰</span>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-yellow-500/30 to-orange-500/30 rounded-lg flex items-center justify-center">
+                      <span className="text-xs sm:text-sm text-yellow-400">⏰</span>
                     </div>
                     <div>
                       <p className="text-xs text-gray-400 uppercase tracking-wider">Expires</p>
-                      <p className="text-sm font-semibold text-yellow-400">
+                      <p className="text-xs sm:text-sm font-semibold text-yellow-400">
                         {formatDate(url.expirationDate)}
                       </p>
                     </div>
@@ -188,45 +188,45 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
               
               <div className="text-right">
                 <p className="text-xs text-gray-400 uppercase tracking-wider">Created</p>
-                <p className="text-sm text-gray-300">{formatDate(url.createdAt)}</p>
+                <p className="text-xs sm:text-sm text-gray-300">{formatDate(url.createdAt)}</p>
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
             <Button 
               size="sm" 
               variant="secondary" 
               onClick={handleCopy}
-              className="flex flex-col items-center gap-1 py-3"
+              className="flex flex-col items-center gap-1 py-2 sm:py-3"
             >
-              <span className="text-lg">📋</span>
+              <span className="text-sm sm:text-lg">📋</span>
               <span className="text-xs">Copy</span>
             </Button>
             <Button 
               size="sm" 
               variant="secondary" 
               onClick={() => setShowQR(!showQR)}
-              className="flex flex-col items-center gap-1 py-3"
+              className="flex flex-col items-center gap-1 py-2 sm:py-3"
             >
-              <span className="text-lg">📱</span>
+              <span className="text-sm sm:text-lg">📱</span>
               <span className="text-xs">QR</span>
             </Button>
             <Button 
               size="sm" 
               variant="secondary" 
               onClick={() => onViewAnalytics(url._id)}
-              className="flex flex-col items-center gap-1 py-3"
+              className="flex flex-col items-center gap-1 py-2 sm:py-3"
             >
-              <span className="text-lg">📊</span>
+              <span className="text-sm sm:text-lg">📊</span>
               <span className="text-xs">Analytics</span>
             </Button>
             <Button 
               size="sm" 
               variant="secondary" 
               onClick={() => onEdit(url)}
-              className="flex flex-col items-center gap-1 py-3"
+              className="flex flex-col items-center gap-1 py-2 sm:py-3 hidden sm:flex"
             >
               <span className="text-lg">✏️</span>
               <span className="text-xs">Edit</span>
@@ -235,9 +235,31 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
               size="sm" 
               variant="danger" 
               onClick={() => onDelete(url._id)}
-              className="flex flex-col items-center gap-1 py-3"
+              className="flex flex-col items-center gap-1 py-2 sm:py-3 hidden sm:flex"
             >
               <span className="text-lg">🗑️</span>
+              <span className="text-xs">Delete</span>
+            </Button>
+          </div>
+          
+          {/* Mobile Action Buttons */}
+          <div className="grid grid-cols-2 gap-2 sm:hidden">
+            <Button 
+              size="sm" 
+              variant="secondary" 
+              onClick={() => onEdit(url)}
+              className="flex flex-col items-center gap-1 py-2"
+            >
+              <span className="text-sm">✏️</span>
+              <span className="text-xs">Edit</span>
+            </Button>
+            <Button 
+              size="sm" 
+              variant="danger" 
+              onClick={() => onDelete(url._id)}
+              className="flex flex-col items-center gap-1 py-2"
+            >
+              <span className="text-sm">🗑️</span>
               <span className="text-xs">Delete</span>
             </Button>
           </div>
