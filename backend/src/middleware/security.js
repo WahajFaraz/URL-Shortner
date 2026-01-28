@@ -12,8 +12,10 @@ export const requestLogger = (req, res, next) => {
 };
 
 // CORS configuration: allow your Vercel frontend + local dev
+// We include both an ENV-based URL and the concrete deployed frontend URL.
 const allowedOrigins = [
-  process.env.FRONTEND_URL, // e.g. https://url-shortner-rose-three.vercel.app
+  process.env.FRONTEND_URL, // optional, e.g. https://url-shortner-rose-three.vercel.app
+  'https://url-shortner-rose-three.vercel.app',
   'http://localhost:5173',
 ];
 
