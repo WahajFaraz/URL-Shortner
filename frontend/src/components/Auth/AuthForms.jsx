@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.js';
-import { Button, Input } from '../common/UIComponents.jsx';
+import { Button, Input, PasswordInput } from '../common/UIComponents.jsx';
 import { slideUp } from '../../utils/animations.js';
 import toast from 'react-hot-toast';
 
@@ -52,9 +52,8 @@ export const LoginForm = () => {
         onChange={handleChange}
         error={errors.email}
       />
-      <Input
+      <PasswordInput
         name="password"
-        type="password"
         label="Password"
         placeholder="••••••••"
         value={formData.password}
@@ -133,9 +132,8 @@ export const RegisterForm = () => {
         onChange={handleChange}
         error={errors.email}
       />
-      <Input
+      <PasswordInput
         name="password"
-        type="password"
         label="Password"
         placeholder="••••••••"
         value={formData.password}
@@ -143,9 +141,8 @@ export const RegisterForm = () => {
         error={errors.password}
       />
       <p className="text-xs text-gray-400 mt-1">Password must be at least 8 characters long</p>
-      <Input
+      <PasswordInput
         name="confirmPassword"
-        type="password"
         label="Confirm Password"
         placeholder="••••••••"
         value={formData.confirmPassword}

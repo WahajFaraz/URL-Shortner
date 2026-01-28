@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { slideUp } from '../../utils/animations.js';
+import { useState } from 'react';
 
 export const GlassCard = ({ children, className = '', ...props }) => (
   <motion.div
@@ -59,6 +60,48 @@ export const Input = ({ label, error, className = '', ...props }) => (
     {error && <p className="text-red-400 text-sm font-medium animate-pulse">{error}</p>}
   </div>
 );
+
+export const PasswordInput = ({ label, error, className = '', ...props }) => {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div className="space-y-3">
+      {label && <label className="block text-sm font-semibold text-gray-200 tracking-wide">{label}</label>}
+      <div className="relative">
+        <motion.input
+          className={`w-full px-5 py-4 pr-12 bg-gradient-to-br from-slate-800/60 to-slate-900/60 border border-slate-600/40 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm hover:border-slate-500/50 ${className}`}
+          whileFocus={{ scale: 1.01, y: -2 }}
+          transition={{ duration: 0.2 }}
+          type={visible ? 'text' : 'password'}
+          {...props}
+        />
+        <button
+          type="button"
+          onClick={() => setVisible((v) => !v)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
+          aria-label={visible ? 'Hide password' : 'Show password'}
+        >
+          {visible ? (
+            // Eye-off
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.5 10.677A2 2 0 0012 14a2 2 0 001.323-.5" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7.362 7.561C5.68 8.738 4.279 10.418 3.5 12c1.5 3 5 7 8.5 7 1.442 0 2.806-.476 4.02-1.2" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.88 5.082A8.09 8.09 0 0112 4c3.5 0 7 4 8.5 8-.57 1.139-1.47 2.34-2.6 3.44" />
+            </svg>
+          ) : (
+            // Eye
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          )}
+        </button>
+      </div>
+      {error && <p className="text-red-400 text-sm font-medium animate-pulse">{error}</p>}
+    </div>
+  );
+};
 
 export const Select = ({ label, className = '', children, ...props }) => (
   <div className="space-y-3">
