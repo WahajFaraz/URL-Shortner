@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import connectDB from './config/database.js';
 import { errorHandler, asyncHandler } from './middleware/errorHandler.js';
 import { securityMiddleware, requestLogger, corsOptions } from './middleware/security.js';
@@ -28,12 +29,38 @@ app.use('/api/urls', urlRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/redirect', redirectRoutes);
 
-// Handle short URL redirects directly
-app.get('/:shortCode', asyncHandler(urlController.getShortUrl));
-
+// API health & status (for monitoring/homepage info)
 app.get('/api/health', (req, res) => {
   res.status(200).json({ success: true, message: 'Server is running' });
 });
+
+app.get('/api/status', (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const dbStatesMap = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting',
+  };
+
+  res.status(200).json({
+    success: true,
+    message: 'Backend status',
+    database: {
+      state: dbStatesMap[dbState] || 'unknown',
+      readyState: dbState,
+    },
+    uptime: process.uptime(),
+    memoryUsage: process.memoryUsage(),
+    env: {
+      nodeEnv: process.env.NODE_ENV || 'development',
+    },
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Handle short URL redirects directly (only for 6-char short codes)
+app.get('/:shortCode([0-9A-Za-z]{6})', asyncHandler(urlController.getShortUrl));
 
 app.use((req, res) => {
   res.status(404).json({
