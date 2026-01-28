@@ -2,6 +2,15 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Spinner } from '@/components/common/UIComponents';
 
+// Base URL for redirect API calls
+// - In production, set VITE_BACKEND_BASE_URL in Vercel to "https://url-shortner-back.vercel.app"
+// - In local dev, this falls back to your local Express server
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_BACKEND_BASE_URL ||
+  (import.meta.env.MODE === 'production'
+    ? 'https://url-shortner-back.vercel.app'
+    : 'http://localhost:5000');
+
 const RedirectPage = () => {
   const { shortCode } = useParams();
   const [needsPassword, setNeedsPassword] = useState(false);
@@ -10,7 +19,7 @@ const RedirectPage = () => {
   useEffect(() => {
     const redirect = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/redirect/${shortCode}`, {
+        const response = await fetch(`${BACKEND_BASE_URL}/redirect/${shortCode}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: password || '' }),

@@ -6,12 +6,22 @@ import toast from 'react-hot-toast';
 import QRCode from 'qrcode.react';
 import { useState } from 'react';
 
+// Base URL used for generated short links
+// - In production, set VITE_BACKEND_BASE_URL in Vercel to "https://url-shortner-back.vercel.app"
+// - In local dev, this falls back to your local Express server
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_BACKEND_BASE_URL ||
+  (import.meta.env.MODE === 'production'
+    ? 'https://url-shortner-back.vercel.app'
+    : 'http://localhost:5000');
+
 export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
   const [showQR, setShowQR] = useState(false);
   const [copied, setCopied] = useState(false);
-  const shortUrl = `http://localhost:5000/${url.shortCode || url.customAlias}`;
-  const displayShortUrl = `${window.location.origin}/${url.shortCode || url.customAlias}`;
-  const cleanShortUrl = `short.ly/${url.shortCode || url.customAlias}`;
+  const shortPath = url.shortCode || url.customAlias;
+  const shortUrl = `${BACKEND_BASE_URL}/${shortPath}`;
+  const displayShortUrl = `${window.location.origin}/${shortPath}`;
+  const cleanShortUrl = `short.ly/${shortPath}`;
 
   const handleCopy = async () => {
     const copySuccess = await copyToClipboard(shortUrl);
