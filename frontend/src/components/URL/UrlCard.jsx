@@ -21,7 +21,8 @@ export const UrlCard = ({ url, onEdit, onDelete, onViewAnalytics }) => {
   const shortPath = url.shortCode || url.customAlias;
   const shortUrl = `${BACKEND_BASE_URL}/${shortPath}`;
   const displayShortUrl = `${window.location.origin}/${shortPath}`;
-  const cleanShortUrl = `short.ly/${shortPath}`;
+  // Display a truly "short" looking path in the UI (copy/open still uses the real backend URL)
+  const cleanShortUrl = `/${shortPath}`;
 
   const handleCopy = async () => {
     const copySuccess = await copyToClipboard(shortUrl);

@@ -22,9 +22,9 @@ const shortUrlSchema = new mongoose.Schema(
     },
     customAlias: {
       type: String,
-      default: null,
       unique: true,
       sparse: true,
+      trim: true,
       lowercase: true,
       match: [/^[a-zA-Z0-9-_]{1,30}$/, 'Invalid custom alias format'],
     },

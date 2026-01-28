@@ -8,7 +8,9 @@ import qrcode from 'qrcode';
 export const createShortUrl = async (userId, originalUrl, customAlias = null, options = {}) => {
   const { title, description, tags, expirationType, expirationDate, expirationClicks } = options;
 
-  if (!sanitizeUrl(originalUrl)) {
+  const normalizedOriginalUrl = sanitizeUrl(originalUrl);
+
+  if (!normalizedOriginalUrl) {
     throw new ValidationError('Invalid URL format');
   }
 
@@ -17,6 +19,15 @@ export const createShortUrl = async (userId, originalUrl, customAlias = null, op
     typeof customAlias === 'string' ? customAlias.trim().toLowerCase() : customAlias;
 
   const alias = normalizedAlias ? normalizedAlias : null;
+
+  // Per-user: only allow shortening the same original URL once
+  const existingForUser = await ShortUrl.findOne({
+    userId,
+    originalUrl: normalizedOriginalUrl,
+  });
+  if (existingForUser) {
+    throw new ConflictError('You have already created a short link for this URL');
+  }
 
   let shortCode = alias || generateShortCode();
 
@@ -52,11 +63,10 @@ export const createShortUrl = async (userId, originalUrl, customAlias = null, op
     console.error('QR Code generation error:', error);
   }
 
-  const shortUrlDoc = await ShortUrl.create({
+  const createPayload = {
     userId,
-    originalUrl,
+    originalUrl: normalizedOriginalUrl,
     shortCode,
-    customAlias: alias,
     title: title || null,
     description: description || null,
     tags: tags || [],
@@ -65,7 +75,14 @@ export const createShortUrl = async (userId, originalUrl, customAlias = null, op
     expirationClicks,
     clicksRemaining: expirationClicks,
     qrCode: qrCodeUrl,
-  });
+  };
+
+  // IMPORTANT: don't store customAlias when not provided (sparse+unique should ignore missing field)
+  if (alias) {
+    createPayload.customAlias = alias;
+  }
+
+  const shortUrlDoc = await ShortUrl.create(createPayload);
 
   const user = await User.findById(userId);
   user.totalLinks += 1;
